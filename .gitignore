@@ -1,0 +1,15 @@
+# PHP / editor
+.phpcs
+.phpstorm.meta.php
+*.cache
+
+# Logs / tmp
+*.log
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Laragon / XAMPP local overrides
+.env
