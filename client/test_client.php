@@ -48,7 +48,8 @@ function panggil($method, $path, $data = null, $token = null)
 
     $isi    = curl_exec($ch);
     $status = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
-    curl_close($ch);
+    // curl_close() tidak dipakai: sejak PHP 8.0 fungsi ini tidak berpengaruh
+    // dan di PHP 8.5 memunculkan peringatan "Deprecated".
 
     return [$status, json_decode($isi, true)];
 }
@@ -245,8 +246,6 @@ cek('Ganti password baru < 8 karakter -> 422', $status == 422);
 // Setelah ganti, login dengan password BARU harus sukses, password LAMA harus gagal
 $tokenBaru2 = login($registerUser, 'password456');
 cek('Setelah ganti, login dengan password baru -> sukses', $tokenBaru2 !== null);
-list($status, $json) = panggil('POST', '/login', ['username' => $registerUser, 'password' => 'password456']);
-$tokenLamaGagal = ($status == 200);
 list($status, $json) = panggil('POST', '/login', ['username' => $registerUser, 'password' => 'password123']);
 cek('Setelah ganti, login dengan password lama -> 401 (gagal)', $status == 401);
 
